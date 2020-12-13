@@ -1,33 +1,51 @@
 window.onload = function() {
-    var profile = document.querySelector("#profile");
     var profileLink = document.querySelector("#profile-link");
     var experiance = document.querySelector("#experiance");
     var experianceLink = document.querySelector("#experiance-link");
     var skills = document.querySelector("#skills");
     var skillsLink = document.querySelector("#skills-link");
-    var links = document.querySelector("#links");
     var linksLink = document.querySelector("#links-link");
+    var navigationMenu = document.querySelector("#menu-img");
+    var navigation = document.querySelector("nav");
+    var navigationlink = document.querySelector("nav ul a")
+        
+    function isMobile() {
+        let isMobile = window.getComputedStyle(navigationMenu).display == "none" ? false : true;
+        return isMobile;
+    }
+
+    navigationlink.addEventListener('click', function(e) {
+        if (isMobile()) toggleMenu();
+    })
 
     window.addEventListener('scroll', function(e) {
-        let currentPos = document.documentElement.scrollTop;
-        if ( currentPos >= profile.offsetTop && currentPos < experiance.offsetTop) {
-            setClass(profileLink);
-        } else if ( currentPos >= experiance.offsetTop && currentPos < skills.offsetTop) {
-            setClass(experianceLink);
-        } else if ( currentPos >= skills.offsetTop && currentPos < links.offsetTop) { 
-            setClass(skillsLink);
-        } else if ( currentPos >= links.offsetTop) {
-            setClass(linksLink);
+        //the +1 is because the scroll value is a pixel off
+        if (isMobile()) { 
+            navigation.classList.remove("visible");
         }
+        let currentPos = document.documentElement.scrollTop + 1;
+        if (currentPos < experiance.offsetTop) {
+            setClass(profileLink);
+        } else if (currentPos < skills.offsetTop) {
+            setClass(experianceLink);
+        } else if (window.innerHeight + document.documentElement.scrollTop == document.documentElement.offsetHeight)  {
+            setClass(linksLink);    
+        } else {
+            setClass(skillsLink);
+        }  
     });
 
     function setClass(currentElement) {
-        profileLink.classList.remove("selected");
-        experianceLink.classList.remove("selected");
-        skillsLink.classList.remove("selected");
-        linksLink.classList.remove("selected");
+        document.querySelector(".selected").classList.toggle("selected");    
         currentElement.classList.add("selected");
-        console.log(document.documentElement.scrollTop);
+    };
+
+    navigationMenu.addEventListener("click", function(e) {
+        toggleMenu();
+    });
+
+    function toggleMenu() {
+        navigation.classList.toggle("visible");
     }
 };
 
