@@ -13,6 +13,7 @@
     "express": "^4.17.1"
   },
   "devDependencies": {
+    "browser-sync": "^2.26.13",
     "gulp": "^4.0.2"
   }
 }
