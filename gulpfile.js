@@ -5,6 +5,7 @@ const htmllint = require('gulp-htmllint');
 const fancyLog = require('fancy-log');
 const colors = require('ansi-colors');
 const htmlmin = require('gulp-htmlmin');
+const imagemin = require('gulp-imagemin');
 
 function clean(cb) {
     del('public/**', {force:true});
@@ -22,7 +23,10 @@ function html(cb) {
 }
 
 function media(cb) {
-    src('private/media/**').pipe(dest('public/media'));
+    src('private/media/**')
+        //TODO add the ability to pass in a file configuration
+        .pipe(imagemin({"silent": true}))
+        .pipe(dest('public/media'));
     cb();
 }
 
