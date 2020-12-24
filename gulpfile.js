@@ -6,7 +6,9 @@ const fancyLog = require('fancy-log');
 const colors = require('ansi-colors');
 const htmlmin = require('gulp-htmlmin');
 const imagemin = require('gulp-imagemin');
+//TODO fix these warnings
 const cssmin = require('gulp-cssmin');
+const jsmin = require('gulp-jsmin');
 
 function clean(cb) {
     del('public/**', {force:true});
@@ -43,7 +45,9 @@ function media() {
 }
 
 function javascript() {
-    return src('private/script/**').pipe(dest('public/script'));
+    return src('private/script/**')
+        .pipe(jsmin())
+        .pipe(dest('public/script'));
 }
 
 function css() {

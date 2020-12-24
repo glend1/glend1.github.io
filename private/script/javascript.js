@@ -7,22 +7,22 @@ window.onload = function() {
     var linksLink = document.querySelector("#links-link");
     var navigationMenu = document.querySelector("#menu-img");
     var navigation = document.querySelector("nav");
-    var navigationlink = document.querySelector("nav ul a")
+    var navigationlink = document.querySelector("nav ul a");
         
     function isMobile() {
         let isMobile = window.getComputedStyle(navigationMenu).display == "none" ? false : true;
         return isMobile;
-    }
+    };
 
     navigationlink.addEventListener('click', function(e) {
         if (isMobile()) toggleMenu();
-    })
+    });
 
     window.addEventListener('scroll', function(e) {
         //the +1 is because the scroll value is a pixel off
         if (isMobile()) { 
             navigation.classList.remove("visible");
-        }
+        };
         let currentPos = document.documentElement.scrollTop + 1;
         if (currentPos < experiance.offsetTop) {
             setClass(profileLink);
@@ -32,7 +32,7 @@ window.onload = function() {
             setClass(linksLink);    
         } else {
             setClass(skillsLink);
-        }  
+        }; 
     });
 
     function setClass(currentElement) {
@@ -46,7 +46,7 @@ window.onload = function() {
 
     function toggleMenu() {
         navigation.classList.toggle("visible");
-    }
+    };
 };
 
 
