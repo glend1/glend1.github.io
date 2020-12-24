@@ -12,17 +12,16 @@ function clean(cb) {
     cb();
 }
 
-function html(cb) {
-    src('private/index.html')
-        .pipe(htmllint({
+function html() {
+    return src('private/index.html')
+        .pipe(htmllint({"rules": {
             "line-end-style": false,
             "id-class-style": "dash"
-        }, htmllintReporter))
+        }}, htmllintReporter))
         .pipe(htmlmin({ 
             "collapseWhitespace": true 
         }))
         .pipe(dest('public'));
-    cb();
 }
 
 function htmllintReporter(filepath, issues) {
@@ -30,28 +29,24 @@ function htmllintReporter(filepath, issues) {
 		issues.forEach(function (issue) {
 			fancyLog(colors.cyan('[gulp-htmllint] ') + colors.white(filepath + ' [' + issue.line + ',' + issue.column + ']: ') + colors.red('(' + issue.code + ') ' + issue.msg));
 		});
-
 		process.exitCode = 1;
 	}
 };
 
-function media(cb) {
-    src('private/media/**')
+function media() {
+    return src('private/media/**')
         .pipe(imagemin({
             "silent": true
         }))
         .pipe(dest('public/media'));
-    cb();
 }
 
-function javascript(cb) {
-    src('private/script/**').pipe(dest('public/script'));
-    cb();
+function javascript() {
+    return src('private/script/**').pipe(dest('public/script'));
 }
 
-function css(cb) {
-    src('private/style/**').pipe(dest('public/style'));
-    cb();
+function css() {
+    return src('private/style/**').pipe(dest('public/style'));
 }
 
 function server(cb)	{
@@ -80,6 +75,7 @@ function watcher(cb) {
     cb();
 };
 
+//TODO add sourcemaps?
 exports.clean = clean;
 exports.html = html;
 exports.media = media;
@@ -89,5 +85,5 @@ exports.server = server;
 exports.watcher = watcher;
 exports.build = series(clean, parallel(html, media, javascript, css));
 exports.auto = series(exports.build, watcher);
-exports.autoload = series(server, exports.auto);
-exports.default = exports.auto;
+exports.autoload = series(exports.auto, server);
+exports.default = exports.autoload;
