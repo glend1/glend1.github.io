@@ -6,6 +6,7 @@ const fancyLog = require('fancy-log');
 const colors = require('ansi-colors');
 const htmlmin = require('gulp-htmlmin');
 const imagemin = require('gulp-imagemin');
+const cssmin = require('gulp-cssmin');
 
 function clean(cb) {
     del('public/**', {force:true});
@@ -46,7 +47,9 @@ function javascript() {
 }
 
 function css() {
-    return src('private/style/**').pipe(dest('public/style'));
+    return src('private/style/**')
+        .pipe(cssmin())
+        .pipe(dest('public/style'));
 }
 
 function server(cb)	{
