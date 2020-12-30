@@ -1,52 +1,65 @@
 window.onload = function() {
-    var profileLink = document.querySelector("#profile-link");
-    var experiance = document.querySelector("#experiance");
-    var experianceLink = document.querySelector("#experiance-link");
-    var skills = document.querySelector("#skills");
-    var skillsLink = document.querySelector("#skills-link");
-    var linksLink = document.querySelector("#links-link");
-    var navigationMenu = document.querySelector("#menu-img");
-    var navigation = document.querySelector("nav");
-    var navigationlink = document.querySelector("nav ul a");
-        
-    function isMobile() {
-        let isMobile = window.getComputedStyle(navigationMenu).display == "none" ? false : true;
-        return isMobile;
+  const profileLink = document.querySelector('#profile-link');
+  const experiance = document.querySelector('#experiance');
+  const experianceLink = document.querySelector('#experiance-link');
+  const skills = document.querySelector('#skills');
+  const skillsLink = document.querySelector('#skills-link');
+  const linksLink = document.querySelector('#links-link');
+  const navigationMenu = document.querySelector('#menu-img');
+  const navigation = document.querySelector('nav');
+  const navigationlink = document.querySelector('nav ul a');
+
+  /**
+    * checks if the display would match that of a mobile.
+    * @return {boolean} if the browser is mobile resolution
+    */
+  function isMobile() {
+    return window.getComputedStyle(navigationMenu).display == 'none' ?
+            false :
+            true;
+  };
+
+  navigationlink.addEventListener('click', function(e) {
+    if (isMobile()) toggleMenu();
+  });
+
+  window.addEventListener('scroll', function(e) {
+    // the +1 is because the scroll value is a pixel off
+    if (isMobile()) {
+      navigation.classList.remove('visible');
     };
-
-    navigationlink.addEventListener('click', function(e) {
-        if (isMobile()) toggleMenu();
-    });
-
-    window.addEventListener('scroll', function(e) {
-        //the +1 is because the scroll value is a pixel off
-        if (isMobile()) { 
-            navigation.classList.remove("visible");
-        };
-        let currentPos = document.documentElement.scrollTop + 1;
-        if (currentPos < experiance.offsetTop) {
-            setClass(profileLink);
-        } else if (currentPos < skills.offsetTop) {
-            setClass(experianceLink);
-        } else if (window.innerHeight + document.documentElement.scrollTop == document.documentElement.offsetHeight)  {
-            setClass(linksLink);    
-        } else {
-            setClass(skillsLink);
-        }; 
-    });
-
-    function setClass(currentElement) {
-        document.querySelector(".selected").classList.toggle("selected");    
-        currentElement.classList.add("selected");
+    const de = document.documentElement;
+    const currentPos = de.scrollTop + 1;
+    if (currentPos < experiance.offsetTop) {
+      setClass(profileLink);
+    } else if (currentPos < skills.offsetTop) {
+      setClass(experianceLink);
+    } else if (window.innerHeight + de.scrollTop == de.offsetHeight) {
+      setClass(linksLink);
+    } else {
+      setClass(skillsLink);
     };
+  });
 
-    navigationMenu.addEventListener("click", function(e) {
-        toggleMenu();
-    });
+  /**
+    * deselects the currently selected element and selects the parameter
+    * @param {object} currentElement the element that will be selected.
+    */
+  function setClass(currentElement) {
+    document.querySelector('.selected').classList.toggle('selected');
+    currentElement.classList.add('selected');
+  };
 
-    function toggleMenu() {
-        navigation.classList.toggle("visible");
-    };
+  navigationMenu.addEventListener('click', function(e) {
+    toggleMenu();
+  });
+
+  /**
+    * toggles visibility of the menu for mobile browsers
+    */
+  function toggleMenu() {
+    navigation.classList.toggle('visible');
+  };
 };
 
 

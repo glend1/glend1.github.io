@@ -8,7 +8,9 @@ const htmlmin = require('gulp-htmlmin');
 const imagemin = require('gulp-imagemin');
 //TODO fix these warnings
 const cssmin = require('gulp-cssmin');
+//TODO have an option to make this silent
 const jsmin = require('gulp-jsmin');
+const eslint = require('gulp-eslint');
 
 function clean(cb) {
     del('public/**', {force:true});
@@ -44,6 +46,15 @@ function media() {
         .pipe(dest('public/media'));
 }
 
+function jslint() {
+    return src('private/script/**')
+        //TODO gul-ellint needs updating to support the newer version of eslint
+        .pipe(eslint({fix:true}))
+        .pipe(eslint.format())
+        .pipe(eslint.failAfterError())
+        .pipe(dest('private/script'));
+}
+
 function javascript() {
     return src('private/script/**')
         .pipe(jsmin())
@@ -75,10 +86,10 @@ function reload(cb) {
 };
 
 function watcher(cb) {
-    watch('private/index.html').on('change', series(html, reload));
-    watch('private/media/**').on('change', series(media, reload));
-    watch('private/script/**').on('change', series(javascript, reload));
-    watch('private/style/**').on('change', series(css, reload));
+    watch('private/index.html').on('change', series(exports.html, reload));
+    watch('private/media/**').on('change', series(exports.media, reload));
+    watch('private/script/**').on('change', series(exports.javascript, reload));
+    watch('private/style/**').on('change', series(exports.css, reload));
     cb();
 };
 
@@ -86,11 +97,11 @@ function watcher(cb) {
 exports.clean = clean;
 exports.html = html;
 exports.media = media;
-exports.javascript = javascript;
+exports.javascript = series(jslint, javascript);
 exports.css = css;
 exports.server = server;
 exports.watcher = watcher;
-exports.build = series(clean, parallel(html, media, javascript, css));
-exports.auto = series(exports.build, watcher);
+exports.build = series(exports.clean, parallel(exports.html, exports.media, exports.javascript, exports.css));
+exports.auto = series(exports.build, exports.watcher);
 exports.autoload = series(exports.auto, server);
 exports.default = exports.autoload;
