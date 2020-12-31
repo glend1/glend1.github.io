@@ -1,3 +1,4 @@
+//TODO fix these warnings
 const del = require('del');
 const {src, dest, series, parallel, watch} = require('gulp');
 const browserSync = require('browser-sync').create();
@@ -6,19 +7,26 @@ const fancyLog = require('fancy-log');
 const colors = require('ansi-colors');
 const htmlmin = require('gulp-htmlmin');
 const imagemin = require('gulp-imagemin');
-//TODO fix these warnings
 const cssmin = require('gulp-cssmin');
 //TODO have an option to make this silent
 const jsmin = require('gulp-jsmin');
 const eslint = require('gulp-eslint');
 
+const publicFolder = 'public';
+const privateFolder = 'private';
+const any = "/**";
+const index = "/index.html";
+const mediaFolder = "media";
+const scriptFolder = "script";
+const styleFolder = "style";
+
 function clean(cb) {
-    del('public/**', {force:true});
+    del(`public${any}`, {force:true});
     cb();
 }
 
 function html() {
-    return src('private/index.html')
+    return src(`${privateFolder}${index}`)
         .pipe(htmllint({"rules": {
             "line-end-style": false,
             "id-class-style": "dash"
@@ -26,7 +34,7 @@ function html() {
         .pipe(htmlmin({ 
             "collapseWhitespace": true 
         }))
-        .pipe(dest('public'));
+        .pipe(dest(publicFolder));
 }
 
 function htmllintReporter(filepath, issues) {
@@ -39,38 +47,38 @@ function htmllintReporter(filepath, issues) {
 };
 
 function media() {
-    return src('private/media/**')
+    return src(`${privateFolder}/${mediaFolder}${any}`)
         .pipe(imagemin({
             "silent": true
         }))
-        .pipe(dest('public/media'));
+        .pipe(dest(`${publicFolder}/${mediaFolder}`));
 }
 
 function jslint() {
-    return src('private/script/**')
+    return src(`${privateFolder}/${scriptFolder}${any}`)
         //TODO gul-ellint needs updating to support the newer version of eslint
         .pipe(eslint({fix:true}))
         .pipe(eslint.format())
         .pipe(eslint.failAfterError())
-        .pipe(dest('private/script'));
+        .pipe(dest(`${privateFolder}/${scriptFolder}`));
 }
 
 function javascript() {
-    return src('private/script/**')
+    return src(`${privateFolder}/${scriptFolder}${any}`)
         .pipe(jsmin())
-        .pipe(dest('public/script'));
+        .pipe(dest(`${publicFolder}/${scriptFolder}`));
 }
 
 function css() {
-    return src('private/style/**')
+    return src(`${privateFolder}/${styleFolder}${any}`)
         .pipe(cssmin())
-        .pipe(dest('public/style'));
+        .pipe(dest(`${publicFolder}/${styleFolder}`));
 }
 
 function server(cb)	{
     browserSync.init({
         server: {
-            baseDir: 'public/',
+            baseDir: `${publicFolder}/`,
             notify: false,
 			open: false
         }
@@ -86,10 +94,10 @@ function reload(cb) {
 };
 
 function watcher(cb) {
-    watch('private/index.html').on('change', series(exports.html, reload));
-    watch('private/media/**').on('change', series(exports.media, reload));
-    watch('private/script/**').on('change', series(exports.javascript, reload));
-    watch('private/style/**').on('change', series(exports.css, reload));
+    watch(`${privateFolder}${index}`).on('change', series(exports.html, reload));
+    watch(`${privateFolder}/${mediaFolder}${any}`).on('change', series(exports.media, reload));
+    watch(`${privateFolder}/${scriptFolder}${any}`).on('change', series(exports.javascript, reload));
+    watch(`${privateFolder}/${styleFolder}${any}`).on('change', series(exports.css, reload));
     cb();
 };
 
