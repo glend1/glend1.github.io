@@ -11,6 +11,7 @@ const cssmin = require('gulp-cssmin');
 //TODO have an option to make this silent
 const jsmin = require('gulp-jsmin');
 const eslint = require('gulp-eslint');
+const sass = require('gulp-sass');
 
 const publicFolder = 'public';
 const privateFolder = 'private';
@@ -71,6 +72,7 @@ function javascript() {
 
 function css() {
     return src(`${privateFolder}/${styleFolder}${any}`)
+        .pipe(sass().on('error', sass.logError))
         .pipe(cssmin())
         .pipe(dest(`${publicFolder}/${styleFolder}`));
 }
