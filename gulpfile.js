@@ -72,6 +72,7 @@ function javascript() {
 
 function css() {
     return src(`${privateFolder}/${styleFolder}${any}`)
+        //TODO lint css
         .pipe(sass().on('error', sass.logError))
         .pipe(cssmin())
         .pipe(dest(`${publicFolder}/${styleFolder}`));
