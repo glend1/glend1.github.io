@@ -13,7 +13,7 @@ const jsmin = require('gulp-jsmin');
 const eslint = require('gulp-eslint');
 const sass = require('gulp-sass');
 
-const publicFolder = 'public';
+const publicFolder = '../cv';
 const privateFolder = 'private';
 const any = "/**";
 const index = "/index.html";
@@ -22,7 +22,11 @@ const scriptFolder = "script";
 const styleFolder = "style";
 
 function clean(cb) {
-    del(`public${any}`, {force:true});
+    del([
+        `${publicFolder}${any}`, 
+        `!${publicFolder}/.gitignore`,
+        `!${publicFolder}/.git`,
+        `!${publicFolder}/.vscode` ], {force:true});
     cb();
 }
 
