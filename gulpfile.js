@@ -61,7 +61,7 @@ function media() {
 
 function jslint() {
     return src(`${privateFolder}/${scriptFolder}${any}`)
-        //TODO gul-ellint needs updating to support the newer version of eslint
+        //TODO gulp-eslint needs updating to support the newer version of eslint
         .pipe(eslint({fix:true}))
         .pipe(eslint.format())
         .pipe(eslint.failAfterError())
