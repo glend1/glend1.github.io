@@ -1,4 +1,3 @@
-//TODO fix these warnings
 const del = require('del');
 const {src, dest, series, parallel, watch} = require('gulp');
 const browserSync = require('browser-sync').create();
