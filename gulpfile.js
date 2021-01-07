@@ -7,7 +7,6 @@ const colors = require('ansi-colors');
 const htmlmin = require('gulp-htmlmin');
 const imagemin = require('gulp-imagemin');
 const cssmin = require('gulp-cssmin');
-//TODO have an option to make this silent
 const jsmin = require('gulp-jsmin');
 const eslint = require('gulp-eslint');
 const sass = require('gulp-sass');
@@ -112,7 +111,6 @@ function watcher(cb) {
     cb();
 };
 
-//TODO add sourcemaps?
 exports.clean = clean;
 exports.html = html;
 exports.media = media;
