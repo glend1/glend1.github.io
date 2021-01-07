@@ -22,17 +22,21 @@ body {
     background-attachment: fixed;
     background-repeat: no-repeat;
     font-size: var(--font-regular);
+
     h1 {
         font-size: var(--font-largest);
         color: var(--brightest-light);
     }
+
     h2 {
         font-size: var(--font-large);
         color: var(--brightest-light);
     }
+
     h3 {
         font-size: var(--font-medium);
     }
+
     h4 {
         font-size: var(--font-small);
     }
@@ -52,12 +56,14 @@ nav {
     width: 100%;
     padding: var(--small-padding);
     box-sizing: border-box;
+
     ul {
         display: flex;
         list-style-type: none;
         font-size: var(--font-medium);
         margin: 0px;
         padding: 0px;
+
         li a {
             padding: 0px .4em;
             height: 100%;
@@ -67,10 +73,13 @@ nav {
             color: var(--bg-color);
         }
     }
+
     #nav-logo {
         margin: .3em 0px;
+
         @extend %logo-height;
     }
+
     #menu-img {
         display: none;
     }
@@ -106,10 +115,12 @@ section {
 }
 
 #skills h2 {
+
     @extend %same-line-skill-title;
 }
 
 #skills h3 {
+
     @extend %same-line-skill-title;
     margin-left: 10px;
 }
@@ -123,6 +134,7 @@ section {
 .skills-display {
     width: 49%;
     margin: 1% 0px;
+
     h4 {
         padding: 0.5em;
         margin: 0px;
@@ -131,6 +143,7 @@ section {
         color: var(--bg-color);
         box-sizing: border-box;
     }
+
     ul {
         display: flex;
         flex-wrap: wrap;
@@ -138,6 +151,7 @@ section {
         margin: 0px;
         width: 100%;
     }
+
     li {
         list-style: none;
         width: calc(100%/3);
@@ -146,9 +160,11 @@ section {
         background-color: var(--text-color);
         color: var(--bg-color);
     }
+
     li:nth-child(6n), li:nth-child(6n-1), li:nth-child(6n-2) {
         background-color: var(--brightest-light);
     }
+
     li:last-child {
         flex-grow: 1;
     }
@@ -162,31 +178,40 @@ footer {
     padding: var(--small-padding);
     box-sizing: border-box;
     padding-bottom: 1em;
+
     span {
         font-size: var(--font-medium);
     }
+
     ul {
         padding: 0px;
         margin: 0px;
     }
+
     li {
         display: inline-block;
         padding: .1em;
+
         img {
             height: 1.2em;
         }
     }
+
     #find-me span {
         display: inline-block;
         padding: .2em 0px;
     }
+
     #copyright {
         display: flex;
         align-items: center;
+
         img {
+
             @extend %logo-height;
             margin: .3em;
         }
+
         span {
             font-size: var(--font-medium);
             padding: .1em;
@@ -195,13 +220,16 @@ footer {
 }
 
 /*navigation for mobile*/
+
 @media (max-width: 600px) {
+
     nav {
         padding: 0px;
         flex-direction: column;
         flex-wrap: nowrap;
         justify-content: flex-start;
         align-content: flex-start;
+
         div {
             display: flex;
             justify-content: space-between;
@@ -209,9 +237,11 @@ footer {
             padding: var(--small-padding);
             box-sizing: border-box;
         }
+
         ul {
             display: none;
         }
+
         #menu-img {
             display: flex;
             padding: 0px 0.4em;
@@ -220,6 +250,7 @@ footer {
 
     nav.visible {
         height: 100vh;
+
         ul {
             flex-grow: 1;
             width: 100%;
@@ -227,6 +258,7 @@ footer {
             flex-direction: column;
             justify-content: space-evenly;
         }
+
         li {
             flex-grow: 1;
         }
@@ -235,16 +267,21 @@ footer {
 }
 
 /* 2 x 2 */
+
 @media (max-width: 1700px) {
+
     .skills-display {
         width: 49%;
         margin: 1% 0px;
+
         li {
             width: 50%;
         }
+
         li:nth-child(n) {
             background-color: var(--text-color);
         }
+
         li:nth-child(4n), li:nth-child(4n-1) {
             background-color: var(--brightest-light);
         }
@@ -252,16 +289,21 @@ footer {
 }
 
 /* 2 x 1 */
+
 @media (max-width: 1100px) {
+
     .skills-display {
         width: 49%;
         margin: 1% 0px;
+
         li {
             width: 100%;
         }
+
         li:nth-child(n) {
             background-color: var(--text-color);
         }
+
         li:nth-child(2n) {
             background-color: var(--brightest-light);
         }
@@ -269,16 +311,21 @@ footer {
 }
 
 /* 1 x 1 */
+
 @media (max-width: 600px) {
+    
     .skills-display {
         width: 100%;
         margin: 1% 0px;
+
         li {
             width: 100%;
         }
+
         li:nth-child(n) {
             background-color: var(--text-color);
         }
+        
         li:nth-child(2n) {
             background-color: var(--brightest-light);
         }

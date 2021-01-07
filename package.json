@@ -24,6 +24,9 @@
     "gulp-imagemin": "^7.1.0",
     "gulp-jsmin": "^0.1.5",
     "gulp-sass": "^4.1.0",
-    "node-sass": "^5.0.0"
+    "gulp-stylelint": "^13.0.0",
+    "node-sass": "^5.0.0",
+    "stylelint": "^13.8.0",
+    "stylelint-scss": "^3.18.0"
   }
 }

@@ -11,6 +11,7 @@ const cssmin = require('gulp-cssmin');
 const jsmin = require('gulp-jsmin');
 const eslint = require('gulp-eslint');
 const sass = require('gulp-sass');
+const gulpStylelint = require('gulp-stylelint');
 
 const publicFolder = '../cv';
 const privateFolder = 'private';
@@ -75,7 +76,11 @@ function javascript() {
 
 function css() {
     return src(`${privateFolder}/${styleFolder}${any}`)
-        //TODO lint css
+        .pipe(gulpStylelint({
+            reporters: [
+              {formatter: 'string', console: true}
+            ]
+        }))
         .pipe(sass().on('error', sass.logError))
         .pipe(cssmin())
         .pipe(dest(`${publicFolder}/${styleFolder}`));
