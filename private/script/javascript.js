@@ -2,6 +2,8 @@ window.onload = function() {
   const profileLink = document.querySelector('#profile-link');
   const experiance = document.querySelector('#experiance');
   const experianceLink = document.querySelector('#experiance-link');
+  const education = document.querySelector('#education');
+  const educationLink = document.querySelector('#education-link');
   const skills = document.querySelector('#skills');
   const skillsLink = document.querySelector('#skills-link');
   const linksLink = document.querySelector('#links-link');
@@ -15,8 +17,8 @@ window.onload = function() {
     */
   function isMobile() {
     return window.getComputedStyle(navigationMenu).display == 'none' ?
-            false :
-            true;
+      false :
+      true;
   };
 
   navigationlink.addEventListener('click', function(e) {
@@ -32,13 +34,15 @@ window.onload = function() {
     const currentPos = de.scrollTop + 1;
     if (currentPos < experiance.offsetTop) {
       setClass(profileLink);
-    } else if (currentPos < skills.offsetTop) {
+    } else if (currentPos < education.offsetTop) {
       setClass(experianceLink);
+    } else if (currentPos < skills.offsetTop) {
+      setClass(educationLink);
     } else if (window.innerHeight + de.scrollTop == de.offsetHeight) {
       setClass(linksLink);
     } else {
       setClass(skillsLink);
-    };
+    }
   });
 
   /**

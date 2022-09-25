@@ -1,5 +1,5 @@
 const del = require('del');
-const {src, dest, series, parallel, watch} = require('gulp');
+const { src, dest, series, parallel, watch } = require('gulp');
 const browserSync = require('browser-sync').create();
 const htmllint = require('gulp-htmllint');
 const fancyLog = require('fancy-log');
@@ -9,7 +9,7 @@ const imagemin = require('gulp-imagemin');
 const cssmin = require('gulp-cssmin');
 const jsmin = require('gulp-jsmin');
 const eslint = require('gulp-eslint');
-const sass = require('gulp-sass');
+const sass = require('gulp-sass')(require('sass'));
 const gulpStylelint = require('gulp-stylelint');
 
 const publicFolder = '../cv';
@@ -22,32 +22,34 @@ const styleFolder = "style";
 
 function clean(cb) {
     del([
-        `${publicFolder}${any}`, 
+        `${publicFolder}${any}`,
         `!${publicFolder}/.gitignore`,
         `!${publicFolder}/.git`,
-        `!${publicFolder}/.vscode` ], {force:true});
+        `!${publicFolder}/.vscode`], { force: true });
     cb();
 }
 
 function html() {
     return src(`${privateFolder}${index}`)
-        .pipe(htmllint({"rules": {
-            "line-end-style": false,
-            "id-class-style": "dash"
-        }}, htmllintReporter))
-        .pipe(htmlmin({ 
-            "collapseWhitespace": true 
+        .pipe(htmllint({
+            "rules": {
+                "line-end-style": false,
+                "id-class-style": "dash"
+            }
+        }, htmllintReporter))
+        .pipe(htmlmin({
+            "collapseWhitespace": true
         }))
         .pipe(dest(publicFolder));
 }
 
 function htmllintReporter(filepath, issues) {
-	if (issues.length > 0) {
-		issues.forEach(function (issue) {
-			fancyLog(colors.cyan('[gulp-htmllint] ') + colors.white(filepath + ' [' + issue.line + ',' + issue.column + ']: ') + colors.red('(' + issue.code + ') ' + issue.msg));
-		});
-		process.exitCode = 1;
-	}
+    if (issues.length > 0) {
+        issues.forEach(function (issue) {
+            fancyLog(colors.cyan('[gulp-htmllint] ') + colors.white(filepath + ' [' + issue.line + ',' + issue.column + ']: ') + colors.red('(' + issue.code + ') ' + issue.msg));
+        });
+        process.exitCode = 1;
+    }
 };
 
 function media() {
@@ -61,7 +63,7 @@ function media() {
 function jslint() {
     return src(`${privateFolder}/${scriptFolder}${any}`)
         //TODO gulp-eslint needs updating to support the newer version of eslint
-        .pipe(eslint({fix:true}))
+        .pipe(eslint({ fix: true }))
         .pipe(eslint.format())
         .pipe(eslint.failAfterError())
         .pipe(dest(`${privateFolder}/${scriptFolder}`));
@@ -77,7 +79,7 @@ function css() {
     return src(`${privateFolder}/${styleFolder}${any}`)
         .pipe(gulpStylelint({
             reporters: [
-              {formatter: 'string', console: true}
+                { formatter: 'string', console: true }
             ]
         }))
         .pipe(sass().on('error', sass.logError))
@@ -85,14 +87,14 @@ function css() {
         .pipe(dest(`${publicFolder}/${styleFolder}`));
 }
 
-function server(cb)	{
+function server(cb) {
     browserSync.init({
         server: {
             baseDir: `${publicFolder}/`,
             notify: false,
-			open: false
+            open: false
         }
-    }); 
+    });
     cb();
 };
 
