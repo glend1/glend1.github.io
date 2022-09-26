@@ -14,11 +14,11 @@ const gulpStylelint = require('gulp-stylelint');
 
 const publicFolder = '../cv';
 const privateFolder = 'private';
-const any = "/**";
-const index = "/index.html";
-const mediaFolder = "media";
-const scriptFolder = "script";
-const styleFolder = "style";
+const any = '/**';
+const index = '/index.html';
+const mediaFolder = 'media';
+const scriptFolder = 'script';
+const styleFolder = 'style';
 
 function clean(cb) {
     del([
@@ -32,13 +32,13 @@ function clean(cb) {
 function html() {
     return src(`${privateFolder}${index}`)
         .pipe(htmllint({
-            "rules": {
-                "line-end-style": false,
-                "id-class-style": "dash"
-            }
+            'rules': {
+                'line-end-style': false,
+                'id-class-style': 'dash',
+            },
         }, htmllintReporter))
         .pipe(htmlmin({
-            "collapseWhitespace": true
+            'collapseWhitespace': true,
         }))
         .pipe(dest(publicFolder));
 }
@@ -55,14 +55,14 @@ function htmllintReporter(filepath, issues) {
 function media() {
     return src(`${privateFolder}/${mediaFolder}${any}`)
         .pipe(imagemin({
-            "silent": true
+            'silent': true,
         }))
         .pipe(dest(`${publicFolder}/${mediaFolder}`));
 }
 
 function jslint() {
     return src(`${privateFolder}/${scriptFolder}${any}`)
-        //TODO gulp-eslint needs updating to support the newer version of eslint
+        // TODO gulp-eslint needs updating to support the newer version of eslint
         .pipe(eslint({ fix: true }))
         .pipe(eslint.format())
         .pipe(eslint.failAfterError())
@@ -79,8 +79,8 @@ function css() {
     return src(`${privateFolder}/${styleFolder}${any}`)
         .pipe(gulpStylelint({
             reporters: [
-                { formatter: 'string', console: true }
-            ]
+                { formatter: 'string', console: true },
+            ],
         }))
         .pipe(sass().on('error', sass.logError))
         .pipe(cssmin())
@@ -92,17 +92,17 @@ function server(cb) {
         server: {
             baseDir: `${publicFolder}/`,
             notify: false,
-            open: false
-        }
+            open: false,
+        },
     });
     cb();
 };
 
 function reload(cb) {
     if (browserSync.active) {
-        browserSync.reload()
+        browserSync.reload();
     };
-    cb()
+    cb();
 };
 
 function watcher(cb) {
