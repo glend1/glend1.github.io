@@ -1,4 +1,4 @@
-window.onload = function() {
+window.onload = function () {
   const profileLink = document.querySelector('#profile-link');
   const experiance = document.querySelector('#experiance');
   const experianceLink = document.querySelector('#experiance-link');
@@ -6,6 +6,8 @@ window.onload = function() {
   const educationLink = document.querySelector('#education-link');
   const skills = document.querySelector('#skills');
   const skillsLink = document.querySelector('#skills-link');
+  const portfolio = document.querySelector('#portfolio');
+  const portfolioLink = document.querySelector('#portfolio-link');
   const linksLink = document.querySelector('#links-link');
   const navigationMenu = document.querySelector('#menu-img');
   const navigation = document.querySelector('nav');
@@ -21,11 +23,11 @@ window.onload = function() {
       true;
   };
 
-  navigationlink.addEventListener('click', function(e) {
+  navigationlink.addEventListener('click', function (e) {
     if (isMobile()) toggleMenu();
   });
 
-  window.addEventListener('scroll', function(e) {
+  window.addEventListener('scroll', function (e) {
     // the +1 is because the scroll value is a pixel off
     if (isMobile()) {
       navigation.classList.remove('visible');
@@ -38,10 +40,12 @@ window.onload = function() {
       setClass(experianceLink);
     } else if (currentPos < skills.offsetTop) {
       setClass(educationLink);
+    } else if (currentPos < portfolio.offsetTop) {
+      setClass(skillsLink);
     } else if (window.innerHeight + de.scrollTop == de.offsetHeight) {
       setClass(linksLink);
     } else {
-      setClass(skillsLink);
+      setClass(portfolioLink);
     }
   });
 
@@ -54,7 +58,7 @@ window.onload = function() {
     currentElement.classList.add('selected');
   };
 
-  navigationMenu.addEventListener('click', function(e) {
+  navigationMenu.addEventListener('click', function (e) {
     toggleMenu();
   });
 
