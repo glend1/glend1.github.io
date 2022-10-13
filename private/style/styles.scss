@@ -157,9 +157,10 @@ section {
 
 #portfolio {
 
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 2em;
+    div {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 2em;
 
     figure {
         padding: 0;
@@ -225,6 +226,8 @@ section {
     @media (max-width: 1200px) {
         grid-template-columns: repeat(1, 1fr);
     }
+
+}
 
 }
 
