@@ -1,0 +1,84 @@
+name: Deploy with Gulp
+
+on:
+  push:
+    branches: [ "dev" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+      with:
+        ref: dev
+
+    - name: Use Node.js
+      uses: actions/setup-node@v3
+
+    - name: Build
+      run: |
+        npm install
+        npm run prod
+
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: compiled-site
+        path: public/
+
+  upload:
+    needs: build
+    runs-on: ubuntu-latest
+  
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+      with:
+        ref: prod
+
+    - name: Clear Working directory
+      continue-on-error: true
+      run: |
+        rm -fr . .eslintrc.json .gitignore .stylelintrc .github
+
+    - name: Download Artifact
+      uses: actions/download-artifact@v3
+      with:
+        name: compiled-site
+    
+    - name: Commit changes
+      run: |
+        git config --global user.email "test@email.com"
+        git config --global user.name "automatic"
+        git add .
+        git commit -am "commit message"
+
+    - name: Push changes
+      uses: ad-m/github-push-action@master
+      with:
+        branch: prod
+
+  deploy:
+    # Add a dependency to the build job
+    needs: build
+
+    # Grant GITHUB_TOKEN the permissions required to make a Pages deployment
+    permissions:
+      pages: write      # to deploy to Pages
+      id-token: write   # to verify the deployment originates from an appropriate source
+
+    # Deploy to the github-pages environment
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    # Specify runner + deployment step
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v1
+        with:
+          artifact_name: compiled-site
