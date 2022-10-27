@@ -12,7 +12,7 @@ const eslint = require('gulp-eslint');
 const sass = require('gulp-sass')(require('sass'));
 const gulpStylelint = require('gulp-stylelint');
 
-const publicFolder = '../cv';
+const publicFolder = 'public';
 const privateFolder = 'private';
 const any = '/**';
 const index = '/index.html';
