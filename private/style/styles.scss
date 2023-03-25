@@ -10,7 +10,7 @@
     --font-small: 1.2em;
     --font-regular: 16pt;
     --small-padding: 0px 5%;
-    --big-padding: 3em 10% 0px;
+    --big-padding: 3em 10% 4rem;
 }
 
 body {
@@ -26,6 +26,8 @@ body {
     h1 {
         font-size: var(--font-largest);
         color: var(--brightest-light);
+        margin-bottom: 0px;
+        padding-bottom: 0px;
     }
 
     h2 {
@@ -35,11 +37,26 @@ body {
 
     h3 {
         font-size: var(--font-medium);
+        padding: 0px;
+        margin: 0px;
     }
 
     h4 {
         font-size: var(--font-small);
     }
+
+}
+
+main {
+    p, ul {
+        padding-top: 0px;
+        margin-top: 1rem;
+    
+        ul {
+            margin-top: 0px;
+        }
+    }
+
 }
 
 %logo-height {
@@ -104,7 +121,7 @@ section {
     }
 }
 
-#profile a {
+#profile .button {
     padding: .5em;
     border-radius: 5em;
     align-self: flex-start;
@@ -113,44 +130,30 @@ section {
     font-size: var(--font-medium);
     text-decoration: none;
     font-weight: bold;
+    margin-bottom: 2rem;
 }
 
 %same-line-skill-title {
     display: inline-block;
 }
 
-#skills {
+#skills, #hobbies {
 
     ul {
-        display: grid;
+        display: flex;
+        flex-wrap: wrap;
         padding: 0px;
-        grid-template-columns: repeat(4, 1fr);
         list-style: none;
+        gap: 1rem;
 
         li {
             color: var(--bg-color) ;
             border-radius: 5em;
             background-color: var(--color-light);
             padding: 1rem;
-            margin: 3rem 1rem;
-
-            .rating {
-                float: right;
-                white-space: nowrap;
-            }
+            
         }
 
-        @media (max-width: 1600px) {
-            grid-template-columns: repeat(3, 1fr);
-        }
-        
-        @media (max-width: 1200px) {
-            grid-template-columns: repeat(2, 1fr);
-        }
-        
-        @media (max-width: 800px) {
-            grid-template-columns: repeat(1, 1fr);
-        }
     }
 
 }
