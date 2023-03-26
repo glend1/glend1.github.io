@@ -147,6 +147,7 @@ section {
         padding: 0px;
         list-style: none;
         gap: 1rem;
+        justify-content: space-between;
 
         li {
             color: var(--bg-color) ;
@@ -157,6 +158,11 @@ section {
         }
 
     }
+
+    ul::after {
+        content: "";
+        flex: auto;
+      }
 
 }
 
@@ -208,17 +214,25 @@ section {
             .tags {
                 padding-left: 0;
                 margin-left: 0;
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: space-between;
 
                 li {
                     background-color: var(--color-dark);
                     border-radius: .75em;
                     margin: .3em;
-                    padding: .3em;
+                    padding: .5em;
                     color: var(--brightest-light);
                     display: inline-block;
                 }
 
             }
+
+            .tags::after {
+                content: "";
+                flex: auto;
+              }
 
         }
 
